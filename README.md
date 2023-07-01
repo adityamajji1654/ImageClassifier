@@ -18,8 +18,7 @@ To install the necessary dependencies, follow these steps:
 
 1. Clone this repository to your local machine.
 2. Navigate to the project directory.
-3. Create a virtual environment (optional but recommended).
-4. Install the dependencies listed in the `requirements.txt` file:
+3. Install the dependencies listed in the `Requirements.txt` file:
 
 <pre> pip install -r Requirements.txt </pre>
 
@@ -35,7 +34,7 @@ This will start the Streamlit application, and you can access it in your web bro
 
 Once the application is running, follow these steps:
 
-1. Click on the "Upload Image" button to select an image file (in JPG or PNG format).
+1. Click on the "Browse Files" button to select an image file (in JPG or PNG or JPEG or WEBM format).
 2. Wait for the model to load and process the image.
 3. The application will display the uploaded image along with the prediction result.
 4. The prediction will indicate whether the image is most likely AI-generated or a real image.
