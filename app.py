@@ -4,7 +4,7 @@ import numpy as np
 from keras.models import load_model
 import tensorflow as tf
 
-@st.cache(allow_output_mutation=True)
+@st.cache_resource
 def load_model():
   model=tf.keras.models.load_model('mymodel2.h5')
   return model
@@ -19,7 +19,7 @@ st.write("""
 with open('style.css') as f:
   st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-file = st.file_uploader('Please upload an image', type=["jpg", "png"],)
+file = st.file_uploader('Please upload an image', type=["jpg", "png", "jpeg", "webm"],)
 import cv2
 from PIL import Image, ImageOps
 from tensorflow.keras.models import load_model
@@ -41,11 +41,15 @@ if file is None:
     st.text('Please upload an image file')
 else:
     image = Image.open(file)
+    image = image.convert("RGB")
     st.image(image, use_column_width=True)
-    predictions = import_and_predict(image, model)
-    score = tf.nn.softmax(predictions[0])
-    predictions = np.argmax(predictions, axis = 1)
-    if(predictions == 0):
-        st.write('<p class = "prediction">The image is most likely an AI Generated Image</p>', unsafe_allow_html=True)
-    else:
-        st.write('<p class = "prediction">The image is most likely a Real Image</p>', unsafe_allow_html=True)
+    try:
+      predictions = import_and_predict(image, model)
+      score = tf.nn.softmax(predictions[0])
+      predictions = np.argmax(predictions, axis = 1)
+      if(predictions == 0):
+          st.write('<p class = "prediction">The image is most likely an AI Generated Image</p>', unsafe_allow_html=True)
+      else:
+          st.write('<p class = "prediction">The image is most likely a Real Image</p>', unsafe_allow_html=True)
+    except Exception as e:
+        st.write(f'An error occurred during prediction')
